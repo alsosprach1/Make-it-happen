@@ -71,25 +71,18 @@ struct Home: View {
                             .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
                     }
                     .padding(.horizontal, 60)
-                    
                     Spacer()
                 }
             }
             .navigationTitle("Welcome")
             .sheet(isPresented: $showModal) {
                 // Contenuto della Modale
-                ModalView(
-                    selectedTime: $selectedTime,
-                    selectedOption: $selectedOption
-                
-                )
+                TwoStepModalView()
             }
         }
     }
 }
 
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Home()
-    }
+#Preview {
+    Home()
 }

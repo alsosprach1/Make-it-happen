@@ -3,11 +3,10 @@ import SwiftUI
 struct TwoStepModalView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var currentStep = 1 // Stato per le fasi
-
     @State private var selectedTime = Date() // Per il DatePicker
-    @State private var giftPurpose = "" // Per il primo campo di testo
-    @State private var additionalNotes = "" // Per il secondo campo di testo
-    
+    @State private var selectedPurpose = "Relax" // Per il Picker
+    let giftPurposes = ["Therapy", "Celebrate", "Reward"] // Opzioni per il Picker
+
     var body: some View {
         NavigationView {
             VStack(spacing: 40) {
@@ -28,7 +27,7 @@ struct TwoStepModalView: View {
                             .padding(.horizontal, 50)
                     }
                 } else if currentStep == 2 {
-                    // Fase 2: Inserimento scopo del regalo
+                    // Fase 2: Scelta dello scopo del regalo
                     VStack(spacing: 20) {
                         Image(systemName: "gift")
                             .font(.system(size: 80))
@@ -39,13 +38,13 @@ struct TwoStepModalView: View {
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 40)
 
-                        TextField("Enter purpose...", text: $giftPurpose)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal, 50)
-
-                        TextField("Additional notes...", text: $additionalNotes)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal, 50)
+                        Picker("Purpose", selection: $selectedPurpose) {
+                            ForEach(giftPurposes, id: \.self) { purpose in
+                                Text(purpose)
+                            }
+                        }
+                        .pickerStyle(WheelPickerStyle())
+                        .padding(.horizontal, 50)
                     }
                 }
 
@@ -58,7 +57,7 @@ struct TwoStepModalView: View {
                             currentStep = 2
                         } else {
                             // Azione finale
-                            print("Time: \(selectedTime), Purpose: \(giftPurpose), Notes: \(additionalNotes)")
+                            print("Time: \(selectedTime), Purpose: \(selectedPurpose)")
                             presentationMode.wrappedValue.dismiss()
                         }
                     }
