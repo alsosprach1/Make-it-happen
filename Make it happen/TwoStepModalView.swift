@@ -3,8 +3,11 @@ import SwiftUI
 struct TwoStepModalView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var currentStep = 1 // Stato per le fasi
-    @State private var selectedTime = Date() // Per il DatePicker
-    @State private var selectedPurpose = "Relax" // Per il Picker
+    @Binding var selectedTime: Date // Per il DatePicker
+    @Binding var selectedPurpose: String// Per il Picker
+    @Binding var showCard: Bool
+    
+    
     let giftPurposes = ["Therapy", "Celebrate", "Reward"] // Opzioni per il Picker
 
     var body: some View {
@@ -57,7 +60,7 @@ struct TwoStepModalView: View {
                             currentStep = 2
                         } else {
                             // Azione finale
-                            print("Time: \(selectedTime), Purpose: \(selectedPurpose)")
+                            showCard = true
                             presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -86,8 +89,10 @@ struct TwoStepModalView: View {
 }
 
 // MARK: - Preview
-struct TwoStepModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        TwoStepModalView()
-    }
+#Preview {
+    @Previewable @State var showCard = false
+    @Previewable @State var selectedTime = Date()
+    @Previewable @State var selectedPurpose = "Therapy"
+    TwoStepModalView(selectedTime: $selectedTime, selectedPurpose: $selectedPurpose, showCard: $showCard )
 }
+

@@ -3,46 +3,91 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    
+struct CardView: View {
     @State var dragOffset: CGSize = .zero
     @State var isDragging: Bool = false
     @State var isFlipped: Bool = false
+    @Binding var selectedTime: Date
+    @Binding var selectedPurpose: String
     
+    func formattedTime() -> String {
+          let dateFormatter = DateFormatter()
+          dateFormatter.dateFormat = "HH:mm" // Ora in formato 24 ore
+          return dateFormatter.string(from: selectedTime)
+      }
     var body: some View {
-        
         ZStack {
             
             //Front of the card
             if !isFlipped {
-                
                 RoundedRectangle(cornerRadius: 25)
-                    .fill(LinearGradient(
-                        gradient: .init(colors: [.red, .orange, .yellow]),
-                        startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                Color.white.opacity(0.3),
+                                Color.white.opacity(0.1)
+                            ]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
                     )
-                    .frame(width: 300, height: 200)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 25)
+                            .strokeBorder(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color.white.opacity(0.3),
+                                        Color.white.opacity(0.1)
+                                    ]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 5
+                            )
+                            .blur(radius: 10)
+                    )
+                    .frame(width: 300, height: 400)
                     .shadow(radius: 15)
                     .overlay(
-                        Text("✨ Interactive Card")
+                        Text("Your gift time is : \(formattedTime())")
                             .font(.title)
                             .foregroundStyle(.white)
-                            .underline()
                     )
+
             } else {
                 //Back of the card
                 RoundedRectangle(cornerRadius: 25)
-                    .fill(LinearGradient(
-                        gradient: .init(colors: [.blue, .purple, .pink]),
-                        startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                Color.white.opacity(0.3),
+                                Color.white.opacity(0.1)
+                            ]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
                     )
-                    .frame(width: 300, height: 200)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 25)
+                            .strokeBorder(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color.white.opacity(0.3),
+                                        Color.white.opacity(0.1)
+                                    ]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 5
+                            )
+                            .blur(radius: 10)
+                    )
+                    .frame(width: 300, height: 400)
                     .shadow(radius: 15)
                     .overlay(
-                        Text("Card Back!")
+                        Text("Your gift purpose is:\(selectedPurpose)")
                             .font(.title)
                             .foregroundStyle(.white)
-                            .underline()
                     )
                     .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             }
@@ -71,13 +116,12 @@ struct ContentView: View {
         
         .animation(isDragging ? .none : .spring(), value: dragOffset)
         
-        //: to simulate the Iphone background
-        .frame(width: 375, height: 667)
-        .background(Color.white)
     }
 }
 
 
 #Preview {
-    ContentView()
+    @State var selectedTime = Date()
+    @State var selectedPurpose = "Therapy"
+    CardView(selectedTime: $selectedTime, selectedPurpose: $selectedPurpose) // Passa un valore di esempio
 }
