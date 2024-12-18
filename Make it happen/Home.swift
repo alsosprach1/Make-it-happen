@@ -12,10 +12,14 @@ struct Home: View {
     @State var selectedPurpose = "Therapeutic"
     @State var showCard = false
     @State private var selectedTime = Date()
+    @State var isTapped = false
+    let gradientColors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple]
     var body: some View {
         NavigationView {
             ZStack {
-                Color.black
+                LinearGradient(gradient: Gradient(colors: isTapped ? gradientColors : [.black]), startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+                    .animation(.easeInOut(duration: 2), value: isTapped)
                 //                LinearGradient(
                 //                    colors: [
                 //                        Color(hex: "#3A1C71"),
@@ -27,7 +31,7 @@ struct Home: View {
                 //                )
                     .ignoresSafeArea() // Importante per coprire tutta l'area
                 if showCard{
-                    CardView(selectedTime:$selectedTime, selectedPurpose: $selectedPurpose)
+                    CardView(isTapped:$isTapped,selectedTime:$selectedTime, selectedPurpose: $selectedPurpose)
                 }else{
                     VStack {
                         Spacer()

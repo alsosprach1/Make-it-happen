@@ -7,6 +7,7 @@ struct CardView: View {
     @State var dragOffset: CGSize = .zero
     @State var isDragging: Bool = false
     @State var isFlipped: Bool = false
+    @Binding var isTapped: Bool
     @Binding var selectedTime: Date
     @Binding var selectedPurpose: String
     
@@ -108,9 +109,13 @@ struct CardView: View {
                     )
                     .overlay(
                         Button(action: {
-                           // Mostra la modale
+                            isTapped = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                isTapped = false
+                            }
+                          
                         }) {
-                            Text("Plan your gift")
+                            Text("Enjoy your gift")
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
@@ -187,5 +192,6 @@ struct CardView: View {
 #Preview {
     @Previewable @State var selectedTime = Date()
     @Previewable @State var selectedPurpose = "Therapy"
-    CardView(selectedTime: $selectedTime, selectedPurpose: $selectedPurpose) // Passa un valore di esempio
+    @Previewable @State var isTapped=false
+    CardView(isTapped: $isTapped,selectedTime: $selectedTime, selectedPurpose: $selectedPurpose ) // Passa un valore di esempio
 }
