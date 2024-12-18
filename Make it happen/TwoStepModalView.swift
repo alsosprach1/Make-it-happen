@@ -8,7 +8,7 @@ struct TwoStepModalView: View {
     @Binding var showCard: Bool
     
     
-    let giftPurposes = ["Therapy", "Celebrate", "Reward"] // Opzioni per il Picker
+    let giftPurposes = ["Therapeutic", "Celebration", "Reward"] // Opzioni per il Picker
 
     var body: some View {
         NavigationView {
@@ -18,7 +18,7 @@ struct TwoStepModalView: View {
                     VStack(spacing: 20) {
                         Image(systemName: "clock")
                             .font(.system(size: 80))
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
 
                         Text("Choose the perfect time to enjoy your today's gift!")
                             .font(.title2)
@@ -34,7 +34,7 @@ struct TwoStepModalView: View {
                     VStack(spacing: 20) {
                         Image(systemName: "gift")
                             .font(.system(size: 80))
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
 
                         Text("What's the purpose of today's gift?")
                             .font(.title2)

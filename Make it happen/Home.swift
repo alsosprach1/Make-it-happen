@@ -9,22 +9,23 @@ import SwiftUI
 
 struct Home: View {
     @State private var showModal = false // Stato per mostrare la modale
-    @State var selectedPurpose = "Therapy"
+    @State var selectedPurpose = "Therapeutic"
     @State var showCard = false
     @State private var selectedTime = Date()
     var body: some View {
         NavigationView {
             ZStack {
-                LinearGradient(
-                    colors: [
-                        Color(hex: "#3A1C71"),
-                        Color(hex: "#D76D77"),
-                        Color(hex: "#FFAF7B")
-                    ],
-                    startPoint: .bottomLeading,
-                    endPoint: .topTrailing
-                )
-                .ignoresSafeArea() // Importante per coprire tutta l'area
+                Color.black
+                //                LinearGradient(
+                //                    colors: [
+                //                        Color(hex: "#3A1C71"),
+                //                        Color(hex: "#D76D77"),
+                //                        Color(hex: "#FFAF7B")
+                //                    ],
+                //                    startPoint: .bottomLeading,
+                //                    endPoint: .topTrailing
+                //                )
+                    .ignoresSafeArea() // Importante per coprire tutta l'area
                 if showCard{
                     CardView(selectedTime:$selectedTime, selectedPurpose: $selectedPurpose)
                 }else{
@@ -37,7 +38,7 @@ struct Home: View {
                             Text("Plan your gift")
                                 .font(.title)
                                 .fontWeight(.bold)
-                                .foregroundColor(.black)
+                                .foregroundColor(.white)
                                 .padding()
                                 .frame(maxWidth: .infinity)
                                 .background(
@@ -75,10 +76,10 @@ struct Home: View {
                         .padding(.horizontal, 60)
                         Spacer()
                     }
-                        
+                    
                 }
             }
-            .navigationTitle("Welcome")
+            .navigationTitle("Make it happen!")
             .sheet(isPresented: $showModal) {
                 // Contenuto della Modale
                 TwoStepModalView(selectedTime: $selectedTime, selectedPurpose: $selectedPurpose, showCard: $showCard)
@@ -86,7 +87,8 @@ struct Home: View {
         }
     }
 }
+    
+    #Preview {
+        Home()
+    }
 
-#Preview {
-    Home()
-}
